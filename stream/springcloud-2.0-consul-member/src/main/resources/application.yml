@@ -1,0 +1,17 @@
+server:
+   port: 8006
+spring:
+   application:
+      name: consul-member
+   ####consul注册中心地址
+   cloud:
+      consul:
+         host: localhost
+         port: 8500
+         discovery:
+         ###服务地址指定生成
+             register: true
+             hostname: 192.168.3.1
+             healthCheckPath: /
+             healthCheckInterval: 15s
+debug: true

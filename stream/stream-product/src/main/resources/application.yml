@@ -1,0 +1,11 @@
+server:
+   port: 9000
+spring:
+   application:
+      name: stream-producer
+      ###默认本地配置
+###rabbitmq:
+###    host: 127.0.0.1
+###    port: 5672
+###    username: guest
+###    password: guest

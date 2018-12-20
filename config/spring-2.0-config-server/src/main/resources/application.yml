@@ -1,0 +1,22 @@
+server:
+   port: 8888
+eureka:
+  client:
+    service-url:
+      defaultZone: http://localhost:8100/eureka
+spring:
+  application:
+      name: config-server
+  cloud:
+    config:
+      server:
+       git:
+         ### git地址
+         uri: https://gitee.com/sybsybsyb/distributed_configuration_file.git
+         search-paths:
+          ### 文件地址
+          - yynconfig
+      ###分支
+      label: master
+### git上配置文件规范：
+### 服务名称-环境.properties

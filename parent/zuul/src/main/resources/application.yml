@@ -1,0 +1,51 @@
+server:
+  port: 80
+
+eureka:
+  client:
+    serviceUrl:
+      defaultZone: http://localhost:8761/eureka/
+      
+spring:
+  application:
+    name: zuul
+  cloud:
+    config:
+    ###读取版本环境
+      profile: dev
+      discovery:
+        ###读取config-server环境 写eureka中configserver名称或者写死服务地址+端口号
+        service-id: config-server
+        ###开启读取权限
+        enabled: true
+
+##默认情况下client会缓存,不会去实时刷新
+##手动刷新 需要人工调用接口（actuator/refresh）去读取配置文件（通过监控中心）
+##自动刷新 通过消息总线 bus手动刷新
+##可以配置定时刷新 但是感觉意义不大 而且性能很不好 会一直有线程去定时刷新
+##中文值要手动本地变成utf-8编码再提交上去  防止乱码
+
+##开启所有端点
+management:
+  endpoints:
+    web:
+      exposure:
+        ## 如果不需要通过bus集群刷新
+        ##include: "*"
+        include: bus-refresh
+#zuul:
+#  routes:
+#  ### 定义转发服务规则 可以随便写 最好规范命名
+#    api-member:
+#    ### 当客户端发送请求http://localhost:80/api-member开头的 都会转发到会员服务
+#      path: /api-member/**
+#      ### 会员服务别名 zuulw网关默认整合ribbon 自动实现负载均衡轮循效果
+#      serviceId:  yyn-member
+#    api-order:
+#      path: /api-order/**
+#      serviceId: yyn-order
+#      
+### 一般情况网关服务和会员服务都是在一个局域网 客户端不在一个局域网 无法直接访问会员服务 网关接口暴露为公网 
+### 还可以用ngnix暴露公网 zuul放在内网
+
+###动态网关：把网关信息放到阿波罗或者是config服务当中去

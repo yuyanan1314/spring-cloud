@@ -1,0 +1,26 @@
+server:
+   port: 8761
+   
+##集群时每个eureka必须定义一个服务名称 而且必须一样
+spring:
+   application:
+      name: eureka
+eureka:
+   instance:
+   ###注册中心地址
+       hostname: 127.0.0.1
+   ###集群环境下 需要配置client 作为一个clent去注册  
+   client: 
+       serviceUrl: 
+           ### 集群环境下 互相注册端口
+           defaultZone: http://${eureka.instance.hostname}:9100/eureka/
+       ###因为自己是注册中心,是否需要将自己注册给自己的注册中心（集群的时候为true 单服务的使用用false）
+       register-with-eureka: false
+       ###因为自己是注册中心,不需要去检索服务信息
+       fetch-registry: false
+   server:
+       ####本地测试环境时 关闭自我保护机制,保证不可用服务及时踢出 默认为true
+       enable-self-preservation: false
+       ###清理间隔 单位毫秒,默认是90秒
+       eviction-interval-timer-in-ms: 2000
+       

@@ -1,0 +1,10 @@
+server:
+  port: 8002
+      
+spring:
+  application:
+    name: lcn-order
+  data:
+    elasticsearch:
+     ###集群名称 需要与elasticsearch配置文件elasticsearch.yml中一样      cluster-name: my-yyn
+      cluster-nodes: localhost:9300

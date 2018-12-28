@@ -1,0 +1,30 @@
+server:
+  port: 8002
+
+eureka:
+  client:
+    serviceUrl:
+      defaultZone: http://localhost:8761/eureka/
+      
+spring:
+  application:
+    name: lcn-order
+    
+  datasource:
+    driver-class-name: com.mysql.jdbc.Driver
+    url: jdbc:mysql://localhost:3306/test?useUnicode=true&characterEncoding=utf8&serverTimezone=UTC";
+    username: root
+    password: root
+    
+    platform: mysql
+    type: com.alibaba.druid.pool.DruidDataSource
+
+feign:
+  hystrix:
+    enabled: true
+    
+    
+#txmanager地址
+tm:
+  manager:
+    url: http://127.0.0.1:8899/tx/manager/

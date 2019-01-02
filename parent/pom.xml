@@ -11,15 +11,12 @@
 		<module>config-server</module>
 		<module>fast-member</module>
 		<module>fast-order</module>
-<<<<<<< Updated upstream
     <module>lcn-member</module>
     <module>lcn-order</module>
     <module>springboot-swagger</module>
     <module>springboot-elasticsearch</module>
-=======
     <module>zipkin-order</module>
     <module>zipkin-member</module>
->>>>>>> Stashed changes
   </modules>
 
 	<parent>

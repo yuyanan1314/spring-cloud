@@ -1,0 +1,46 @@
+server:
+  port: 8970
+  http2:
+    enabled: true
+  servlet:
+    context-path: /gate
+
+debug: true
+
+eureka:
+  client:
+    serviceUrl:
+      defaultZone: http://localhost:8761/eureka/
+      
+spring:
+  application:
+    name: zuul
+  cloud:
+    gateway:
+       ### 可以定义一些共同的filter，对所有路由都起作用
+       default-filters:
+       ### 默认true 启动网关       enabled: true
+       routes:
+        ### 这个路由的唯一id，不定义的话为一个uuid
+        - id: cashier               
+          ### http请求为lb://前缀 + 服务id； 
+          ### ws请求为lb:ws://前缀 + 服务id；表示将请求负载到哪一个服务上     
+          uri: lb://YYN-MEMBER
+          ### 表示这个路由的请求匹配规则，只有符合这个规则的请求才会走这个路由。为一个数组，每个规则为并且的关系
+          predicates:
+              ### 1. name：规则名称，目前有10个，有Path，Query，Method，Header，After，Before，Between，Cookie，Host，RemoteAddr 
+              ### 2. args：参数key-value键值对
+          - Path=/member/**
+          ### 请求转发前的filter，为一个数组
+          filters: 
+          - StripPrefix=1
+          ###  这个路由的执行order 越小越优先
+          ### order: 1
+          
+         # Normwal Websocket route
+        - id: websocket_route
+          uri: lb:ws://YYN-MEMBER
+          predicates:
+          - Path=/websocket/member/**
+          filters: 
+          - StripPrefix=2

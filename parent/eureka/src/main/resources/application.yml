@@ -22,5 +22,6 @@ eureka:
        ####本地测试环境时 关闭自我保护机制,保证不可用服务及时踢出 默认为true
        enable-self-preservation: false
        ###清理间隔 单位毫秒,默认是90秒
-       eviction-interval-timer-in-ms: 2000
+       #eviction-interval-timer-in-ms: 2000
+       eviction-interval-timer-in-ms: 20000
        

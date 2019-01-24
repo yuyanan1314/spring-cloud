@@ -11,12 +11,12 @@
 		<module>config-server</module>
 		<module>fast-member</module>
 		<module>fast-order</module>
-    <module>lcn-member</module>
-    <module>lcn-order</module>
-    <module>springboot-swagger</module>
-    <module>springboot-elasticsearch</module>
-    <module>zipkin-order</module>
-    <module>zipkin-member</module>
+	    <module>lcn-member</module>
+	    <module>lcn-order</module>
+	    <module>springboot-swagger</module>
+	    <module>springboot-elasticsearch</module>
+	    <module>zipkin-order</module>
+	    <module>zipkin-member</module>
   </modules>
 
 	<parent>

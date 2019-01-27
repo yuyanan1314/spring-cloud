@@ -44,6 +44,7 @@ spring:
           ### springcloud-gateway discovery默认规则：http://网关ip：网关端口/目标服务在注册中心的名称/目标服务的接口路径
           ### 为了兼容以前的规则，依据springcloud-gateway提供的RewritePath过滤器（基于spel配置） 实现此功能
           ### 对于spel并不是很熟悉，因此过程很痛苦，如需修改此处，请慎重           -yuyanan
+          ### 兼容配置-------start--------
           predicates: 
           - name: Path
             args: 
@@ -53,6 +54,8 @@ spring:
             args:
               regexp: "'/api/v1/'+serviceId+'/(?<remaining>.*)'"
               replacement: "'/${remaining}'"
+          ### 兼容配置-------end--------
+          
           ### 加入限流
           - name: RequestRateLimiter
             args: 

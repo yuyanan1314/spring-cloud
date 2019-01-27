@@ -1,9 +1,13 @@
 logging:
   level:
-    root: debug
-gate-way-prefix: /api/v1 
+    org.springframework.cloud.gateway: TRACE
+    org.springframework.http.server.reactive: DEBUG
+    org.springframework.web.reactive: DEBUG
+    
 server:
   port: ${PORT:8970}
+
+gate-way-prefix: /api/v1 
 
 spring:
   application:
@@ -12,7 +16,7 @@ spring:
         date-format: yyyy-MM-dd HH:mm:ss
         time-zone: GMT+8
         default-property-inclusion: NON_NULL
-  #限制了请求的文件大小:每个文件的配置最大为1,048,576 bytes=1M，单次请求的文件的总数不能大于10Mb
+        #限制了请求的文件大小:每个文件的配置最大为1,048,576 bytes=1M，单次请求的文件的总数不能大于10Mb
   servlet:
       multipart:
           max-file-size: 100MB
@@ -24,11 +28,39 @@ spring:
       password: ${REDIS_PSWD:beyondsoft}
       #默认使用db2
       database: ${REDIS_DB_NO:7}
+      
+      
   cloud:
     gateway:
-       ### 可以定义一些共同的filter，对所有路由都起作用 根据ip限制流量
-       default-filters:
-       ### 默认true 启动网关       enabled: true
+       ### 根据注册中心自动路由 
+       discovery:
+        locator:
+          ### 开启服务中心自动根据seviceId（大写）创建路由的功能
+          enabled: true
+          ### 服务名无需大写
+          lowerCaseServiceId: true
+          ### 说明：
+          ### 我们fnb旧版网关对于新加入服务的规则：忧郁使用了zuul zuul提供了stripPrefix 并且我们设置了 /api/v1/  所以最终路径为：api/v1/目标服务在注册中心的名称/目标服务的接口路径
+          ### springcloud-gateway discovery默认规则：http://网关ip：网关端口/目标服务在注册中心的名称/目标服务的接口路径
+          ### 为了兼容以前的规则，依据springcloud-gateway提供的RewritePath过滤器（基于spel配置） 实现此功能
+          ### 对于spel并不是很熟悉，因此过程很痛苦，如需修改此处，请慎重           -yuyanan
+          predicates: 
+          - name: Path
+            args: 
+              pattern: "'/api/v1/'+serviceId+'/**'"
+          filters:
+          - name: RewritePath
+            args:
+              regexp: "'/api/v1/'+serviceId+'/(?<remaining>.*)'"
+              replacement: "'/${remaining}'"
+          ### 加入限流
+          - name: RequestRateLimiter
+            args: 
+              redis-rate-limiter.replenishRate: 10
+              redis-rate-limiter.burstCapacity: 20
+              key-resolver: "#{@ipKeyResolver}"
+              
+       ### 自定义路由
        routes:
         ### 这个路由的唯一id，不定义的话为一个uuid
         - id: cashier               
@@ -120,7 +152,7 @@ spring:
               redis-rate-limiter.replenishRate: 10
               redis-rate-limiter.burstCapacity: 20
               key-resolver: "#{@ipKeyResolver}"
-
+        
 ###注册到注册中心
 eureka:
   instance:
@@ -135,12 +167,10 @@ eureka:
     serviceUrl:
         defaultZone: http://${REGISTRY_NAME:beyondSoft}:${REGISTRY_PASS:beyondSoft2018.com}@${EUREKA_HOST:localhost}:${EUREKA_PORT:8761}/eureka/
 
-ribbon:
-  eureka:
-    enabled: true
 
-###开启压缩      
 feign: 
+  hystrix:    enabled: true
+  ###开启压缩      
   client:
     config:
        #服务名，填写default为所有服务
@@ -168,8 +198,8 @@ management:
     endpoint:
         health:
             show-details: always
+        gateway:            enabled: true
     endpoints:
         web:
             exposure:
-                include: "*"
-
+                include: gateway

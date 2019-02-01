@@ -1,4 +1,4 @@
-package com.zuul;
+package com.gateway;
 
 import org.springframework.context.annotation.Bean;
 import org.springframework.http.HttpHeaders;
@@ -15,6 +15,13 @@ import org.springframework.web.server.WebFilterChain;
 
 import reactor.core.publisher.Mono;
 
+/**
+ * 跨域设置
+ *
+ * @author yuyanan01@beyondsoft.com
+ * @version 1.0
+ * @date 19-1-28
+ */
 @Component
 public class CorsConfiguration {
 

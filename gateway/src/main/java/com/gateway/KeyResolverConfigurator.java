@@ -1,4 +1,4 @@
-package com.zuul;
+package com.gateway;
 
 import org.springframework.cloud.gateway.filter.ratelimit.KeyResolver;
 import org.springframework.context.annotation.Bean;
@@ -8,8 +8,10 @@ import reactor.core.publisher.Mono;
 
 /**
  * 限流配置
- * @author yyn
  *
+ * @author yuyanan01@beyondsoft.com
+ * @version 1.0
+ * @date 19-1-28
  */
 @Configuration
 public class KeyResolverConfigurator {

@@ -13,3 +13,6 @@
 6.旧版路由负载，新版已兼容实现
 7.旧版文件压缩，上传大小，服务超时等设置，新版已兼容实现
 8.静态资源过滤（弃用，采用默认过滤地址 /static/** /public/**）
+
+启动:eureka地址 redis地址 端口 密码
+docker run -d --name gateway -p 8970:8970 -e PARAM="-DEUREKA_HOST=10.26.2.119 -DREDIS_HOST=10.26.2.119 -DREDIS_PORT=6379 -DREDIS_PWD=beyondsoft" bys-cd.chinacloudapp.cn/linkerfoo/gateway-new

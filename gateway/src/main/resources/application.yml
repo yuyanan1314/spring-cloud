@@ -25,7 +25,7 @@ spring:
   redis:
       host: ${REDIS_HOST:localhost}
       port: ${REDIS_PORT:6379}
-      password: ${REDIS_PWD:beyondsoft}
+      password: ${REDIS_PSWD:beyondsoft}
       #默认使用db2
       database: ${REDIS_DB_NO:7}
       

@@ -10,7 +10,7 @@
 		<relativePath/> <!-- lookup parent from repository -->
 	</parent>
 	<groupId>com.beyondsoft.rdc.cloud.fnb</groupId>
-	<artifactId>gateway</artifactId>
+	<artifactId>common-gateway-new</artifactId>
 	<version>0.0.1-SNAPSHOT</version>
 
 	<properties>
@@ -87,7 +87,7 @@
 	</repositories>
 
 	<build>
-		<finalName>gateway-new</finalName>
+		<finalName>common-gateway-new</finalName>
 		<plugins>
 			<plugin>
 				<groupId>org.springframework.boot</groupId>

@@ -25,7 +25,7 @@ spring:
   redis:
       host: ${REDIS_HOST:localhost}
       port: ${REDIS_PORT:6379}
-      password: ${REDIS_PSWD:beyondsoft}
+      password: ${REDIS_PWD:beyondsoft}
       #默认使用db2
       database: ${REDIS_DB_NO:7}
       
@@ -158,7 +158,7 @@ eureka:
   client:
     serviceUrl:
         # defaultZone: http://${REGISTRY_NAME:beyondSoft}:${REGISTRY_PASS:beyondSoft2018.com}@${EUREKA_HOST:localhost}:${EUREKA_PORT:8761}/eureka/
-        defaultZone: http://localhost:${EUREKA_PORT:8761}/eureka/
+        defaultZone: http://${EUREKA_HOST:localhost}:${EUREKA_PORT:8761}/eureka/
 
 
 feign: 

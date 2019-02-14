@@ -78,7 +78,7 @@ spring:
                 key-resolver: '#{@ipKeyResolver}'
 
          # Websocket route
-        - id: websocket_route
+        - id: websocket_cashier
           uri: lb:ws://fnb-cashier
           predicates:
           - Path=${gate-way-prefix}/cashier/**
@@ -148,8 +148,6 @@ spring:
 ###注册到注册中心
 eureka:
   instance:
-        statusPageUrlPath: /info
-        healthCheckUrlPath: /health
         # docker 部署开启
         # true-注册时使用ip  false - 主机名
         prefer-ip-address: ${PREFER_IP_ADDRESS:true}
@@ -158,7 +156,7 @@ eureka:
   client:
     serviceUrl:
         # defaultZone: http://${REGISTRY_NAME:beyondSoft}:${REGISTRY_PASS:beyondSoft2018.com}@${EUREKA_HOST:localhost}:${EUREKA_PORT:8761}/eureka/
-        defaultZone: http://${EUREKA_HOST:localhost}:${EUREKA_PORT:8761}/eureka/
+        defaultZone: http://${REGISTRY_NAME:beyondSoft}:${REGISTRY_PASS:beyondSoft2018.com}@${EUREKA_HOST:localhost}:${EUREKA_PORT:8761}/eureka/
 
 
 feign: 
